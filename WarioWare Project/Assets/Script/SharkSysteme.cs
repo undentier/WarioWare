@@ -15,8 +15,11 @@ public class SharkSysteme : MonoBehaviour
     public float minStartSpawn;
 
     public GameObject shark;
-    public Transform sharkPoint;
+    public GameObject stopSign;
+
     private GameObject actualShark;
+
+    public Transform sharkPoint;
 
 
     void Start()
@@ -26,7 +29,7 @@ public class SharkSysteme : MonoBehaviour
         lockCanSpawn = false;
         sharkIsHere = false;
 
-        
+        stopSign.SetActive(false);
     }
 
     void Update()
@@ -62,6 +65,8 @@ public class SharkSysteme : MonoBehaviour
         actualShark = Instantiate(shark, sharkPoint.transform.position, sharkPoint.transform.rotation);
         sharkIsHere = true;
 
+        stopSign.SetActive(true);
+
         StartCoroutine(LifeTime());
     }
 
@@ -69,6 +74,9 @@ public class SharkSysteme : MonoBehaviour
     {
         yield return new WaitForSeconds(effectiveTime);
         Destroy(actualShark);
+
+        stopSign.SetActive(false);
+
         sharkIsHere = false;
         lockCanSpawn = false;
     }
